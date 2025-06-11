@@ -17,3 +17,8 @@ class Animal:
                 f" Вид животного: {self.type},"
                 f" Возраст животного: {self.age}")
 
+    def sound(self, sound):
+        print(sound)
+
+cat = Animal('Милана', "кошка", 7)
+print(cat)
