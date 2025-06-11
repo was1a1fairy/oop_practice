@@ -110,3 +110,44 @@ print(airplane.landing())
 print(airplane.takeoff(133, 200))
 print(airplane.change_speed(13))
 print(airplane.change_height(0))
+
+class MusicAlbum:
+
+    def __init__(
+            self,
+            player: str,
+            title: str,
+            style: str,
+            playlist: list
+    ):
+        self.player = player
+        self.title = title
+        self.style = style
+        self.playlist = playlist
+
+    def __str__(self):
+        return (f"{self.title}:\n"
+                f" {self.playlist}\n"
+                f" ({self.player},{self.style})")
+
+    def add_song(self, song: str):
+        if song not in self.playlist:
+            self.playlist.append(song)
+        else:
+            print("song already in playlist:(((")
+
+    def del_song(self, song: str):
+        if song in self.playlist:
+            self.playlist.remove(song)
+        else:
+            print("Сначала добавьте этот трек в плейлист, а затем удаляйте на здоровье")
+
+    def play_song(self, song: str):
+        if song in self.playlist:
+            return f"Вопроизведен трек: {song}"
+
+album = MusicAlbum("me", "мяумяу", "rock", [1, 2, 3, 4])
+song = "song"
+print(album.del_song(song))
+print(album.add_song(song))
+print(album.play_song(song))
