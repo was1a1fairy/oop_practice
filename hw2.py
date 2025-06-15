@@ -23,3 +23,33 @@ class Point:
     def __mul__(self, value: int):
         return Point(self.x * value, self.y * value)
 
+
+class Vector2D:
+
+    def __init__(
+            self,
+            start: Point,
+            end: Point
+    ):
+        self.start = start
+        self.end = end
+
+    def __str__(self):
+        return f"Vector: {self.start}, {self.end}"
+
+    def __add__(
+            self,
+            other: Vector2D
+    ):
+        return Vector2D(self.start + other.start,
+                        self.end + other.end)
+
+    def __sub__(self, other: Vector2D):
+        return Vector2D(self.start - other.start,
+                        self.end - other.end)
+
+    def __mul__(self, value: int):
+        return Vector2D(self.start * value, self.end * value)
+
+    def len(self):
+        return (self.end.y - self.start.y)*(self.end.x - self.start.x)
