@@ -53,3 +53,26 @@ class Vector2D:
 
     def len(self):
         return (self.end.y - self.start.y)*(self.end.x - self.start.x)
+
+class Money:
+
+    def __init__(
+            self,
+            dollars: int,
+            cents: int
+    ):
+        self.dollars = dollars
+        self.cents = cents
+
+    def __str__(self):
+        return f"{self.dollars} dollars, {self.cents} cents."
+
+    def __add__(self, other: Money):
+        return Money((self.dollars + other.dollars) + ((self.cents + other.cents)//100),
+        (self.cents + other.cents)%100)
+
+    def __sub__(self, other: Money):
+        if self.cents < other.cents:
+            self.dollars -= 1
+            self.cents += 100
+        return Money(self.dollars - other.dollars, self.cents - other.cents)
