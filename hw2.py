@@ -76,3 +76,31 @@ class Money:
             self.dollars -= 1
             self.cents += 100
         return Money(self.dollars - other.dollars, self.cents - other.cents)
+
+class Time:
+
+    def __init__(
+            self,
+            hours,
+            minutes,
+            seconds
+    ):
+        self.hours = hours
+        self.minutes = minutes
+        self.seconds = seconds
+
+    def __str__(self):
+        return f"{self.hours} hours, {self.minutes} minutes, {self.seconds} seconds."
+
+    def __add__(self, other: Time):
+        minutes = (self.minutes + other.minutes)%60
+        seconds = (self.seconds + other.seconds)%60
+        hours = self.hours + other.hours
+        if self.seconds + other.seconds >= 60:
+            minutes += (self.seconds + other.seconds)//60
+        if (self.minutes + other.minutes) >= 60:
+            hours += (self.minutes + other.minutes)//60
+        return Time(hours, minutes, seconds)
+
+    def len(self):
+        return self.hours*60*60 + self.minutes*60 + self.seconds
