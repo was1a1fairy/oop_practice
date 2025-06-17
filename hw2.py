@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from gc import set_debug
+
 
 class Point:
 
@@ -104,3 +106,83 @@ class Time:
 
     def len(self):
         return self.hours*60*60 + self.minutes*60 + self.seconds
+
+class ColoredPoint(Point):
+
+    def __init__(self, x:int, y:int, color:str):
+        super().__init__(x,y)
+        self.color = color
+
+    def __str__(self):
+        return (f"point({self.x},{self.y})"
+                f" have {self.color} color")
+
+    def __add__(self, other: ColoredPoint):
+        if self.color == other.color:
+            return ColoredPoint(self.x + other.x,
+                                self.y + other.y,
+                                self.color)
+        else:
+            return ColoredPoint(self.x + other.x,
+                                self.y + other.y,
+                                "black")
+
+    def __sub__(self, other: ColoredPoint):
+        if self.color == other.color:
+            return ColoredPoint(self.x - other.x,
+                                self.y - other.y,
+                                self.color)
+        else:
+            return ColoredPoint(self.x - other.x,
+                                self.y - other.y,
+                                "black")
+
+class Matrix:
+
+    def __init__(
+            self,
+            a:int,
+            b:int,
+            c:int,
+            d:int
+    ):
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+
+    def __str__(self):
+        return f"{[[self.a,self.b],
+                   [self.c,self.d]]}"
+
+    def __add__(self, other: Matrix):
+        return Matrix(self.a + other.a,
+                      self.b + other.b,
+                      self.c + other.c,
+                      self.d + other.d)
+
+    def __mul__(self, value: int):
+        return Matrix(self.a * value,
+                      self.b * value,
+                      self.c * value,
+                      self.d * value)
+
+    def len(self):
+        return 4
+
+class Temperature:
+
+    def __init__(self, degrees: int):
+        self.degrees = degrees
+
+    def __str__(self):
+        return f"temperature: {self.degrees}"
+
+    def __add__(self, other: Temperature):
+        return Temperature(self.degrees + other.degrees)
+
+    def __sub__(self, other: Temperature):
+        return Temperature(self.degrees - other.degrees)
+
+    def __mul__(self, value: int):
+        return Temperature(self.degrees*value)
