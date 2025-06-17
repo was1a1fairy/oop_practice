@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from gc import set_debug
 
 
 class Point:
@@ -19,8 +18,8 @@ class Point:
     def __add__(self, other: Point):
         return Point(self.x + other.x, self.y + other.y)
 
-     def __sub__(self, other: Point):
-         return Point(self.x - other.x, self.y - other.y)
+    def __sub__(self, other: Point):
+        return Point(self.x - other.x, self.y - other.y)
 
     def __mul__(self, value: int):
         return Point(self.x * value, self.y * value)
@@ -54,7 +53,7 @@ class Vector2D:
         return Vector2D(self.start * value, self.end * value)
 
     def len(self):
-        return (self.end.y - self.start.y)*(self.end.x - self.start.x)
+        return ((self.end.y - self.start.y)+(self.end.x - self.start.x))**0.5
 
 class Money:
 
@@ -63,8 +62,8 @@ class Money:
             dollars: int,
             cents: int
     ):
-        self.dollars = dollars
-        self.cents = cents
+        self.dollars = dollars + cents//100
+        self.cents = cents//100
 
     def __str__(self):
         return f"{self.dollars} dollars, {self.cents} cents."
@@ -78,7 +77,6 @@ class Money:
             self.dollars -= 1
             self.cents += 100
         return Money(self.dollars - other.dollars, self.cents - other.cents)
-
 class Time:
 
     def __init__(
@@ -87,9 +85,9 @@ class Time:
             minutes,
             seconds
     ):
-        self.hours = hours
-        self.minutes = minutes
-        self.seconds = seconds
+        self.seconds = seconds%(60*60)
+        self.minutes = minutes%60 + seconds%60
+        self.hours = hours + minutes//60 + seconds//3600
 
     def __str__(self):
         return f"{self.hours} hours, {self.minutes} minutes, {self.seconds} seconds."
@@ -104,7 +102,7 @@ class Time:
             hours += (self.minutes + other.minutes)//60
         return Time(hours, minutes, seconds)
 
-    def len(self):
+    def __len__(self):
         return self.hours*60*60 + self.minutes*60 + self.seconds
 
 class ColoredPoint(Point):
@@ -167,7 +165,7 @@ class Matrix:
                       self.c * value,
                       self.d * value)
 
-    def len(self):
+    def __len__(self):
         return 4
 
 class Temperature:
